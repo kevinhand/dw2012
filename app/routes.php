@@ -1,9 +1,9 @@
 <?php
 $app = new Slim();
 
-// Login
+// Login with Google
 $app->get('/auth/google', function () {
-  // TODO
+  require(__DIR__ . '/auth/google.php');
 });
 
 // Get paper info from title
