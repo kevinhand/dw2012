@@ -11,18 +11,29 @@ class ACMDigitalLibraryParser
     $parent = $this->matches['parent'];
     $id = $this->matches['id'];
     $bibtex = file_get_contents("http://dl.acm.org/downformats.cfm?id={$id}&parent_id={$parent}&expformat=bibtex");
+    $this->title = '';
     if (preg_match('@title\s*=\s*{(?P<title>[^}]+)}@', $bibtex, $matches)) {
       $this->title = $matches['title'];
     }
+    $this->authors = '';
     if (preg_match('@author\s*=\s*{(?P<author>[^}]+)}@', $bibtex, $matches)) {
       $this->authors = $matches['author'];
     }
+    $this->year = '';
     if (preg_match('@year\s*=\s*{(?P<year>[^}]+)}@', $bibtex, $matches)) {
       $this->year = $matches['year'];
     }
+    $this->conference = '';
     if (preg_match('@booktitle\s*=\s*{(?P<booktitle>[^}]+)}@', $bibtex, $matches)) {
       $this->conference = $matches['booktitle'];
     }
+    if (preg_match('@journal\s*=\s*{(?P<journal>[^}]+)}@', $bibtex, $matches)) {
+      $this->conference = $matches['journal'];
+    }
+    if (preg_match('@conference\s*=\s*{(?P<conference>[^}]+)}@', $bibtex, $matches)) {
+      $this->conference = $matches['conference'];
+    }
+    $this->description = '';
     if (preg_match('@abstract\s*=\s*{(?P<abstract>[^}]+)}@', $bibtex, $matches)) {
       $this->description = $matches['abstract'];
     }
