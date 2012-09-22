@@ -6,7 +6,8 @@ require(__DIR__ . '/vendor/markdown.php');
 require(__DIR__ . '/../cache-settings.php');
 require(__DIR__ . '/init.php');
 
-// include models here
+require(__DIR__ . '/models/User.php');
+require(__DIR__ . '/models/Note.php');
 
 require(__DIR__ . '/controllers/ApplicationController.php');
 

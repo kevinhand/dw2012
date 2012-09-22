@@ -1,17 +1,16 @@
 <?php
-session_start();
-
 define('GOOGLE_STATE', 'google_state');
 
 function generate_state()
 {
-  return $_SESSION[GOOGLE_STATE] = md5(uniqid(GOOGLE_STATE, TRUE));
+  $state = md5(uniqid(GOOGLE_STATE, TRUE));
+  fSession::set(GOOGLE_STATE, $state);
+  return $state;
 }
 
 function validate_state($state)
 {
-  if (!array_key_exists(GOOGLE_STATE, $_SESSION)) return FALSE;
-  return $state == $_SESSION[GOOGLE_STATE];
+  return $state == fSession::get(GOOGLE_STATE);
 }
 
 function goto_google()
@@ -51,6 +50,6 @@ $access_token = $json['access_token'];
 
 $url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token={$access_token}";
 $userinfo = json_decode(file_get_contents($url), TRUE);
+$email = $userinfo['email'];
 
-print('<pre>');
-print_r($userinfo);
+print $email;
