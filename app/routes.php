@@ -15,7 +15,7 @@ $app->get('/parse/title', function () {
 // Parse url
 $app->get('/parse/url', function () {
   $controller = new NoteController();
-  $controller->parseTitle(fRequest::get('url'));
+  $controller->parseUrl(fRequest::get('url'));
 });
 
 // Create note

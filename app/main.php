@@ -10,6 +10,7 @@ require(__DIR__ . '/models/User.php');
 require(__DIR__ . '/models/Note.php');
 
 require(__DIR__ . '/controllers/ApplicationController.php');
+require(__DIR__ . '/controllers/NoteController.php');
 
 require(__DIR__ . '/helpers/Util.php');
 require(__DIR__ . '/helpers/Lock.php');
