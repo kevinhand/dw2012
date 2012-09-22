@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 define('GOOGLE_STATE', 'google_state');
 
 function generate_state()
