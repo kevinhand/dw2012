@@ -50,6 +50,19 @@ $access_token = $json['access_token'];
 
 $url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token={$access_token}";
 $userinfo = json_decode(file_get_contents($url), TRUE);
-$email = $userinfo['email'];
 
-print $email;
+$email = $userinfo['email'];
+$token = $_GET['state'];
+
+global $mongodb;
+$collection = $mongodb->users;
+$user = $collection->findOne(array('email' => $email));
+if ($user === NULL) {
+  $user = array('email' => $email, 'token' => $token);
+  $collection->insert($user);
+  $user_id = $user['_id'];
+} else {
+  $collection->update($user, array('$token' => $token));
+  $user_id = $user['_id'];
+}
+Util::redirect("/#${user_id}/${token}");

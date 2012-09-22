@@ -21,7 +21,7 @@ $app->get('/parse/url', function () {
 // Create note
 $app->post('/notes', function () {
   $controller = new NoteController();
-  $controller->authenticate(fRequest::get('token'));
+  $controller->authenticate(fRequest::get('user_id'), fRequest::get('token'));
   $controller->createNote(json_decode(fRequest::get('data')));
 });
 
@@ -34,14 +34,14 @@ $app->get('/notes', function () {
 // Edit and update note
 $app->post('/note/:id/_update', function ($id) {
   $controller = new NoteController();
-  $controller->authenticate(fRequest::get('token'));
+  $controller->authenticate(fRequest::get('user_id'), fRequest::get('token'));
   $controller->updateNote($id, json_decode(fRequest::get('data')));
 });
 
 // Remove note
 $app->post('/note/:id/_delete', function ($id) {
   $controller = new NoteController();
-  $controller->authenticate(fRequest::get('token'));
+  $controller->authenticate(fRequest::get('user_id'), fRequest::get('token'));
   $controller->deleteNote($id);
 });
 
