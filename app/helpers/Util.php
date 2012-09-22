@@ -16,6 +16,14 @@ class Util
     return date('Y');
   }
   
+  public static function repairUrl($url)
+  {
+    if (Util::startsWith($url, 'ftp://')) return $url;
+    if (Util::startsWith($url, 'http://')) return $url;
+    if (Util::startsWith($url, 'https://')) return $url;
+    return "http://$url";
+  }
+  
   public static function startsWith($haystack, $needle)
   {
     $length = strlen($needle);

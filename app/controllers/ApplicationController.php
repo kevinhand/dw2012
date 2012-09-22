@@ -27,6 +27,7 @@ class ApplicationController
   
   protected function ajaxReturn($ary)
   {
+    header('Content-type: application/json');
     echo json_encode($ary);
   }
   

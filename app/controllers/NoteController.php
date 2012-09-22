@@ -14,12 +14,14 @@ class NoteController extends ApplicationController
   
   public function parseTitle($title)
   {
-    // TODO
+    $parser = new TitleParser();
+    $this->success($parser->parse($title));
   }
   
   public function parseUrl($url)
   {
-    // TODO
+    $parser = new UrlParser();
+    $this->success($parser->parse($url));
   }
   
   public function createNote($note)
@@ -34,6 +36,7 @@ class NoteController extends ApplicationController
   public function searchNote($q, $me)
   {
     // TODO
+    $this->success(array('notes' => array()));
   }
   
   public function updateNote($id, $note)

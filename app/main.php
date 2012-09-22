@@ -13,10 +13,18 @@ require(__DIR__ . '/controllers/ApplicationController.php');
 require(__DIR__ . '/controllers/NoteController.php');
 
 require(__DIR__ . '/helpers/Util.php');
+require(__DIR__ . '/helpers/UrlParser.php');
+require(__DIR__ . '/helpers/TitleParser.php');
 require(__DIR__ . '/helpers/Lock.php');
+
+require(__DIR__ . '/parsers/GitHubParser.php');
+require(__DIR__ . '/parsers/StackOverflowParser.php');
+require(__DIR__ . '/parsers/CiteSeerParser.php');
+require(__DIR__ . '/parsers/LinkParser.php');
 
 try {
   require(__DIR__ . '/routes.php');
 } catch (Exception $e) {
+  header('Content-type: application/json');
   echo json_encode(array('status' => 'failure', 'reason' => $e->getMessage()));
 }
