@@ -3,4 +3,5 @@ tmp/
 *.tmp
 *.log
 settings.php
+snapshots/*.png
 

@@ -15,3 +15,12 @@ Finally enable it in `php.ini`: (e.g. `/Applications/XAMPP/xamppfiles/etc/php.in
 ```ini
 extension=mongo.so
 ```
+
+## PhantomJS
+
+```shell
+brew update && brew install phantomjs
+```
+
+This `rasterize.js` is all it takes to capture a web site.
+See this: http://code.google.com/p/phantomjs/wiki/QuickStart#Rendering
