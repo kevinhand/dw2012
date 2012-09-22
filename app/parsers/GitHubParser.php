@@ -3,7 +3,7 @@ class GitHubParser
 {
   public function accepts($url)
   {
-    return preg_match('@^(?:https?://)?github.com/(?P<user>[^/]+)/(?P<repo>[^/]+)@', $url, $this->matches);
+    return preg_match('@^(?:https?://)?github\.com/(?P<user>[^/]+)/(?P<repo>[^/]+)@', $url, $this->matches);
   }
   
   public function parse($url)

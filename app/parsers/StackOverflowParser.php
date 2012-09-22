@@ -3,7 +3,7 @@ class StackOverflowParser
 {
   public function accepts($url)
   {
-    return preg_match('@^(?:https?://)?stackoverflow.com/questions/(?P<id>[^/]+)@', $url, $this->matches);
+    return preg_match('@^(?:https?://)?stackoverflow\.com/questions/(?P<id>[^/]+)@', $url, $this->matches);
   }
   
   public function parse($url)

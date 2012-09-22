@@ -3,7 +3,7 @@ class CiteSeerParser
 {
   public function accepts($url)
   {
-    return preg_match('@^(?:https?://)?citeseerx.ist.psu.edu/viewdoc/summary\?doi=(?P<doi>[^/]+)@', $url, $this->matches);
+    return preg_match('@^(?:https?://)?citeseerx\.ist\.psu\.edu/viewdoc/summary\?doi=(?P<doi>[^/]+)@', $url, $this->matches);
   }
   
   public function parse($url)
