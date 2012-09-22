@@ -3,7 +3,13 @@ class NoteController extends ApplicationController
 {
   public function authenticate($user_id, $token)
   {
-    // TODO
+    global $mongodb;
+    $collection = $mongodb->users;
+    $this->user = $collection->findOne(array('_id' => new MongoId($user_id), 'token' => $token));
+    if ($this->user === NULL) {
+      $this->failure("authentication failed");
+      exit(1);
+    }
   }
   
   public function parseTitle($title)
@@ -16,9 +22,13 @@ class NoteController extends ApplicationController
     // TODO
   }
   
-  public function createNote($data)
+  public function createNote($note)
   {
-    // TODO
+    global $mongodb;
+    $collection = $mongodb->notes;
+    $note['user_email'] = $this->user['email'];
+    $collection->insert($note);
+    $this->success(array('id' => $note['_id']->{'$id'}));
   }
   
   public function searchNote($q, $me)
@@ -26,13 +36,20 @@ class NoteController extends ApplicationController
     // TODO
   }
   
-  public function updateNote($id, $data)
+  public function updateNote($id, $note)
   {
-    // TODO
+    global $mongodb;
+    $collection = $mongodb->notes;
+    $note['user_email'] = $this->user['email'];
+    $collection->update(array('_id' => new MongoId($id)), $note);
+    $this->success();
   }
   
   public function deleteNote($id)
   {
-    // TODO
+    global $mongodb;
+    $collection = $mongodb->notes;
+    $collection->remove(array('_id' => new MongoId($id)));
+    $this->success();
   }
 }

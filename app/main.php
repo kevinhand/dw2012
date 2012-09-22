@@ -15,4 +15,8 @@ require(__DIR__ . '/controllers/NoteController.php');
 require(__DIR__ . '/helpers/Util.php');
 require(__DIR__ . '/helpers/Lock.php');
 
-require(__DIR__ . '/routes.php');
+try {
+  require(__DIR__ . '/routes.php');
+} catch (Exception $e) {
+  echo json_encode(array('status' => 'failure', 'reason' => $e->getMessage()));
+}

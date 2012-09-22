@@ -32,6 +32,17 @@ class ApplicationController
   
   public function notSupported()
   {
-    // TODO
+    $this->failure('not supported');
+  }
+  
+  public function success($json=array())
+  {
+    $json['status'] = 'success';
+    $this->ajaxReturn($json);
+  }
+  
+  public function failure($message='error')
+  {
+    $this->ajaxReturn(array('status' => 'failure', 'reason' => $message));
   }
 }
