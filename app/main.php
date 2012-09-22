@@ -21,6 +21,7 @@ require(__DIR__ . '/parsers/GitHubParser.php');
 require(__DIR__ . '/parsers/StackOverflowParser.php');
 require(__DIR__ . '/parsers/CiteSeerParser.php');
 require(__DIR__ . '/parsers/ACMDigitalLibraryParser.php');
+require(__DIR__ . '/parsers/MSRAcademicParser.php');
 require(__DIR__ . '/parsers/LinkParser.php');
 
 try {
