@@ -26,6 +26,22 @@ function set_cookie(c_name, value, exdays){
   document.cookie = c_name + "=" + c_value;
 }
 
+(function(){
+  var prmstr = window.location.search.substr(1);
+  var prmarr = prmstr.split("&");
+  var params = {};
+
+  for (var i = 0; i < prmarr.length; i++) {
+    var tmparr = prmarr[i].split("=");
+    params[tmparr[0]] = tmparr[1];
+  }
+  
+  if (params.url) {
+    $('#link-url').val(decodeURIComponent(params.url));
+    $('#add-link-link').click();
+  }
+})();
+
 var save_link_handler = {
   link: function(data){
     $('#addLinkTab .hidden.row').hide();
