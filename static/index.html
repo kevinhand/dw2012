@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Welcome to Foundation</title>
+  <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+  <link rel="stylesheet" href="stylesheets/jquery.loadmask.css"/>
+  <link rel="stylesheet" href="stylesheets/app.css"/>
+  <script src="javascripts/modernizr.foundation.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="row">
+    <div class="three columns">
+      <h1><img src="images/logo.gif" /></h1>
+    </div>
+    <div class="nine columns">
+      <ul class="nav-bar right">
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+        <li><a href="#">Link 4</a></li>
+      </ul>
+    </div>
+    <hr/>
+  </div>
+  <div class="row">
+    <div class="four columns push-eight">
+      <dl class="vertical tabs">
+        <dd class="active"><a href="#introduction">Introduction</a></dd>
+        <dd><a href="#addLink">Add Link</a></dd>
+        <dd><a href="#addPaper">Add Paper</a></dd>
+        <dd><a href="#addText">Add Text / Code</a></dd>
+        <dd><a href="#search">Search Notes</a></dd>
+      </dl>
+      TODO: tags here
+    </div>
+    <div class="eight columns pull-four">
+      <div class="hidden alert-box success">
+        <span class="message"></span>
+        <a href="javascript:void(0);" class="close">&times;</a>
+      </div>
+      <div class="hidden alert-box alert">
+        <span class="message"></span>
+        <a href="javascript:void(0);" class="close">&times;</a>
+      </div>
+      <ul class="tabs-content">
+        <li class="active" id="introductionTab">
+          Introduction
+        </li>
+        <li id="addLinkTab">
+          <div class="row collapse">
+            <div class="two columns">
+              <label class="inline">Your Link URL</label>
+            </div>
+            <div class="nine columns">
+              <input type="url" id="link-url" placeholder="paste your link address here"/>
+            </div>
+            <div class="one columns">
+              <a id="btn-save-link" href="javascript:void(0);" class="postfix success button expand">Add</a>
+            </div>
+          </div>
+          <div class="hidden row type-link">
+            <div class="five columns">
+              <a class="th" href="javascript:void(0);">
+                <img src="images/250x250.gif"/>
+              </a>
+            </div>
+            <form class="seven columns">
+              <label>Type: <span class="radius label">Normal Link</span></label>
+              <hidden name="type" value="link"/>
+              <label>Title:</label>
+              <input name="title" type="text"/>
+              <label>Note:</label>
+              <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
+              <label>Tags:</label>
+              <textarea name="tags" class="tags" rows="1"></textarea>
+              <button class="button">Submit</button>
+            </form>
+          </div>
+          <div class="hidden row type-project">
+            <div class="four columns">
+              <a class="th" href="javascript:void(0);">
+                <img src="images/github_logo.png"/>
+              </a>
+            </div>
+            <form class="eight columns">
+              <label>Type: <span class="radius label">GitHub Project</span></label>
+              <hidden name="type" value="project"/>
+              <label>Description:</label>
+              <textarea name="description"></textarea>
+              <label>Homepage:</label>
+              <input name="homepage" type="url"/>
+              <label>Note:</label>
+              <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
+              <label>Tags:</label>
+              <textarea name="tags" class="tags" rows="1"></textarea>
+              <button class="button">Submit</button>
+            </form>
+          </div>
+          <div class="hidden row type-question">
+            <form class="twelve columns">
+              <label>Type: <span class="radius label">StackOverflow Question</span></label>
+              <hidden name="type" value="question"/>
+              <label>Title:</label>
+              <input name="title" type="text"/>
+              <label>Summary:</label>
+              <textarea name="summary"></textarea>
+              <label>Replies: (choose the ones you like)</label>
+              <ul class="replies">TODO</ul>
+              <label>Note:</label>
+              <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
+              <label>Tags:</label>
+              <textarea name="tags" class="tags" rows="1"></textarea>
+              <button class="button">Submit</button>
+            </form>
+          </div>
+          <div class="hidden row type-paper">
+            <form class="twelve columns">
+              <label>Type: <span class="radius label">Academic Paper</span></label>
+              <hidden name="type" value="paper"/>
+              <label>Title:</label>
+              <input name="title" type="text"/>
+              <label>Author(s):</label>
+              <input name="authors" type="text"/>
+              <label>Year:</label>
+              <input name="year" type="text" class="two"/>
+              <label>Venue:</label>
+              <input name="conference" type="text"/>
+              <label>Description:</label>
+              <textarea name="description"></textarea>
+              <label>Note:</label>
+              <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
+              <label>Tags:</label>
+              <textarea name="tags" class="tags" rows="1"></textarea>
+              <button class="button">Submit</button>
+            </form>
+          </div>
+        </li>
+        <li id="addPaperTab">
+          Add Paper
+        </li>
+        <li id="addTextTab">
+          Add Text / Code
+        </li>
+        <li id="searchTab">
+          <div class="row">
+            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
+            <div class="ten columns">1</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
+            <div class="ten columns">2</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
+            <div class="ten columns">3</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <footer class="row">
+    <div class="twelve columns">
+      <hr />
+      <div class="row">
+        <div class="four columns">
+          <p>&copy; Copyright no one at all. Go to town.</p>
+        </div>
+        <div class="eight columns">
+          <ul class="link-list right">
+            <li><a href="#">Section 1</a></li>
+            <li><a href="#">Section 2</a></li>
+            <li><a href="#">Section 3</a></li>
+            <li><a href="#">Section 4</a></li>
+            <li><a href="#">Section 5</a></li>
+            <li><a href="#">Section 6</a></li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+  </footer>
+  <script src="javascripts/jquery.js"></script>
+  <script src="javascripts/foundation.min.js"></script>
+  <script src="javascripts/jquery.loadmask.min.js"></script>
+  <script src="javascripts/jquery.textext.js"></script>
+  <script src="javascripts/app.js"></script>
+  <script src="javascripts/main.js"></script>
+</body>
+</html>

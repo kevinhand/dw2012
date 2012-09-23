@@ -22,7 +22,7 @@ $app->get('/parse/url', function () {
 $app->post('/notes', function () {
   $controller = new NoteController();
   $controller->authenticate(fRequest::get('user_id'), fRequest::get('token'));
-  $controller->createNote(json_decode(fRequest::get('data')));
+  $controller->createNote(fRequest::get('data'));
 });
 
 // Search notes
