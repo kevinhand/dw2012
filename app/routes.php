@@ -9,13 +9,13 @@ $app->get('/auth/google', function () {
 // Get paper info from title
 $app->get('/parse/title', function () {
   $controller = new NoteController();
-  $controller->parseTitle(fRequest::get('title'));
+  $controller->parseTitle(trim(fRequest::get('title')));
 });
 
 // Parse url
 $app->get('/parse/url', function () {
   $controller = new NoteController();
-  $controller->parseUrl(fRequest::get('url'));
+  $controller->parseUrl(trim(fRequest::get('url')));
 });
 
 // Create note
@@ -34,7 +34,7 @@ $app->get('/notes/random', function () {
 // Search notes
 $app->get('/notes', function () {
   $controller = new NoteController();
-  $controller->searchNote(fRequest::get('q'), fRequest::get('me'));
+  $controller->searchNote(trim(fRequest::get('q')), fRequest::get('me'));
 });
 
 // Tags
