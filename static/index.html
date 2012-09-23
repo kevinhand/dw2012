@@ -144,7 +144,38 @@
           </div>
         </li>
         <li id="addPaperTab">
-          Add Paper
+          <div class="row collapse">
+            <div class="two columns">
+              <label class="inline">Paper Title</label>
+            </div>
+            <div class="nine columns">
+              <input type="text" id="paper-title" placeholder="paste your paper title here"/>
+            </div>
+            <div class="one columns">
+              <a id="btn-save-paper" href="javascript:void(0);" class="postfix success button expand">Add</a>
+            </div>
+          </div>
+          <div class="hidden row type-paper">
+            <form class="twelve columns">
+              <label>Type: <span class="radius label">Academic Paper</span></label>
+              <hidden name="type" value="paper"/>
+              <label>Title:</label>
+              <input name="title" type="text"/>
+              <label>Author(s):</label>
+              <input name="authors" type="text"/>
+              <label>Year:</label>
+              <input name="year" type="text" class="two"/>
+              <label>Venue:</label>
+              <input name="conference" type="text"/>
+              <label>Description:</label>
+              <textarea name="description"></textarea>
+              <label>Note:</label>
+              <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
+              <label>Tags:</label>
+              <textarea name="tags" class="tags" rows="1"></textarea>
+              <button class="button">Submit</button>
+            </form>
+          </div>
         </li>
         <li id="addTextTab">
           Add Text / Code

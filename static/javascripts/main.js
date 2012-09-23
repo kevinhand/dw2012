@@ -28,33 +28,45 @@ function set_cookie(c_name, value, exdays){
 
 var save_link_handler = {
   link: function(data){
-    $('.hidden.row').hide();
-    $('.type-link.row').show();
-    $('.type-link form input[name="title"]').val(data.title);
-    $('.type-link .th img').attr('src', data.snapshot_url);
+    $('#addLinkTab .hidden.row').hide();
+    $('#addLinkTab .type-link.row').show();
+    $('#addLinkTab .type-link form input[name="title"]').val(data.title);
+    $('#addLinkTab .type-link .th img').attr('src', data.snapshot_url);
   },
   project: function(data){
-    $('.hidden.row').hide();
-    $('.type-project.row').show();
-    $('.type-project form textarea[name="description"]').text(data.description);
-    $('.type-project form input[name="homepage"]').val(data.homepage);
+    $('#addLinkTab .hidden.row').hide();
+    $('#addLinkTab .type-project.row').show();
+    $('#addLinkTab .type-project form textarea[name="description"]').text(data.description);
+    $('#addLinkTab .type-project form input[name="homepage"]').val(data.homepage);
   },
   question: function(data){
-    $('.hidden.row').hide();
-    $('.type-question.row').show();
-    $('.type-question form input[name="title"]').val(data.title);
-    $('.type-question form input[name="summary"]').text(data.summary);
+    $('#addLinkTab .hidden.row').hide();
+    $('#addLinkTab .type-question.row').show();
+    $('#addLinkTab .type-question form input[name="title"]').val(data.title);
+    $('#addLinkTab .type-question form input[name="summary"]').text(data.summary);
     // TODO append replies
-    $('.type-question form .tags').textext()[0].tags().addTags(data.tags || []);
+    $('#addLinkTab .type-question form .tags').textext()[0].tags().addTags(data.tags || []);
   },
   paper: function(data){
-    $('.hidden.row').hide();
-    $('.type-paper.row').show();
-    $('.type-paper form input[name="title"]').val(data.title);
-    $('.type-paper form input[name="authors"]').val(data.authors);
-    $('.type-paper form input[name="year"]').val(data.year);
-    $('.type-paper form input[name="conference"]').val(data.conference);
-    $('.type-paper form input[name="description"]').text(data.description);
+    $('#addLinkTab .hidden.row').hide();
+    $('#addLinkTab .type-paper.row').show();
+    $('#addLinkTab .type-paper form input[name="title"]').val(data.title);
+    $('#addLinkTab .type-paper form input[name="authors"]').val(data.authors);
+    $('#addLinkTab .type-paper form input[name="year"]').val(data.year);
+    $('#addLinkTab .type-paper form input[name="conference"]').val(data.conference);
+    $('#addLinkTab .type-paper form input[name="description"]').text(data.description);
+  }
+};
+
+var save_paper_handler = {
+  paper: function(data){
+    $('#addPaperTab .hidden.row').hide();
+    $('#addPaperTab .type-paper.row').show();
+    $('#addPaperTab .type-paper form input[name="title"]').val(data.title);
+    $('#addPaperTab .type-paper form input[name="authors"]').val(data.authors);
+    $('#addPaperTab .type-paper form input[name="year"]').val(data.year);
+    $('#addPaperTab .type-paper form input[name="conference"]').val(data.conference);
+    $('#addPaperTab .type-paper form input[name="description"]').text(data.description);
   }
 };
 
@@ -119,6 +131,49 @@ $('#addLinkTab .hidden.row form').submit(function(){
       report_error(data);
     }
     spin_unlock('#addLinkTab');
+  }, 'json');
+  return false;
+});
+
+$('#btn-save-paper').click(function(){
+  var paper_title = $('#paper-title').val();
+  if (paper_title.length <= 3) return;
+  spin_lock('#addPaperTab');
+  $.get(api_base + '/parse/title', { title: paper_title }, function(data){
+    var handler;
+    if (data.status == 'success') {
+      $('#addPaperTab .row.collapse .one').hide();
+      $('#addPaperTab .row.collapse .nine').removeClass('nine').addClass('ten');
+      $('#addPaperTab .row.collapse input').prop('disabled', true);
+      handler = save_paper_handler[data.type];
+      handler(data);
+    } else {
+      report_error(data);
+    }
+    spin_unlock('#addPaperTab');
+  }, 'json');
+});
+
+$('#addPaperTab .hidden.row form').submit(function(){
+  var data = $(this).serializeObject();
+  spin_lock('#addPaperTab');
+  $.post(api_base + '/notes', {
+    user_id: get_cookie('user_id'),
+    token: get_cookie('token'),
+    data: data
+  }, function(data){
+    if (data.status == 'success') {
+      $('.hidden.row').hide();
+      $('#addPaperTab .row.collapse .one').show();
+      $('#addPaperTab .row.collapse .ten').removeClass('ten').addClass('nine');
+      $('#addPaperTab .row.collapse input').prop('disabled', false);
+      $('#paper-title').val('');
+      $('.hidden.alert-box.success .message').text('Note created successfully.');
+      $('.hidden.alert-box.success').show();
+    } else {
+      report_error(data);
+    }
+    spin_unlock('#addPaperTab');
   }, 'json');
   return false;
 });
