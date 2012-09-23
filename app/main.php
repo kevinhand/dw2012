@@ -16,6 +16,7 @@ require(__DIR__ . '/helpers/Util.php');
 require(__DIR__ . '/helpers/UrlParser.php');
 require(__DIR__ . '/helpers/TitleParser.php');
 require(__DIR__ . '/helpers/Lock.php');
+require(__DIR__ . '/helpers/Indexer.php');
 
 require(__DIR__ . '/parsers/GitHubParser.php');
 require(__DIR__ . '/parsers/StackOverflowParser.php');

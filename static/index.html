@@ -33,7 +33,7 @@
   <div class="row">
     <div class="four columns push-eight">
       <dl class="vertical tabs">
-        <dd class="active"><a href="#introduction">Introduction</a></dd>
+        <dd class="active"><a href="#recentNotes">Recent Notes</a></dd>
         <dd><a href="#addLink">Add Link</a></dd>
         <dd><a href="#addPaper">Add Paper</a></dd>
         <dd><a href="#addText">Add Text / Code</a></dd>
@@ -51,8 +51,8 @@
         <a href="javascript:void(0);" class="close">&times;</a>
       </div>
       <ul class="tabs-content">
-        <li class="active" id="introductionTab">
-          Introduction
+        <li class="active" id="recentNotesTab">
+          Recent Notes
         </li>
         <li id="addLinkTab">
           <div class="row collapse">
@@ -74,9 +74,10 @@
             </div>
             <form class="seven columns">
               <label>Type: <span class="radius label">Normal Link</span></label>
-              <hidden name="type" value="link"/>
+              <input type="hidden" name="type" value="link"/>
               <label>Title:</label>
               <input name="title" type="text"/>
+              <input type="hidden" name="snapshot_url" value=""/>
               <label>Note:</label>
               <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
               <label>Tags:</label>
@@ -92,7 +93,7 @@
             </div>
             <form class="eight columns">
               <label>Type: <span class="radius label">GitHub Project</span></label>
-              <hidden name="type" value="project"/>
+              <input type="hidden" name="type" value="project"/>
               <label>Description:</label>
               <textarea name="description"></textarea>
               <label>Homepage:</label>
@@ -107,7 +108,7 @@
           <div class="hidden row type-question">
             <form class="twelve columns">
               <label>Type: <span class="radius label">StackOverflow Question</span></label>
-              <hidden name="type" value="question"/>
+              <input type="hidden" name="type" value="question"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Summary:</label>
@@ -124,7 +125,7 @@
           <div class="hidden row type-paper">
             <form class="twelve columns">
               <label>Type: <span class="radius label">Academic Paper</span></label>
-              <hidden name="type" value="paper"/>
+              <input type="hidden" name="type" value="paper"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Author(s):</label>
@@ -158,7 +159,7 @@
           <div class="hidden row type-paper">
             <form class="twelve columns">
               <label>Type: <span class="radius label">Academic Paper</span></label>
-              <hidden name="type" value="paper"/>
+              <input type="hidden" name="type" value="paper"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Author(s):</label>
@@ -181,20 +182,18 @@
           Add Text / Code
         </li>
         <li id="searchTab">
-          <div class="row">
-            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
-            <div class="ten columns">1</div>
+          <div class="row collapse">
+            <div class="two columns">
+              <label class="inline">Keywords</label>
+            </div>
+            <div class="eight columns">
+              <input type="text" id="search-tags" placeholder="enter keywords or tags or whatever here"/>
+            </div>
+            <div class="two columns">
+              <a id="btn-search-notes" href="javascript:void(0);" class="postfix success button expand">Search</a>
+            </div>
           </div>
-          <hr />
-          <div class="row">
-            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
-            <div class="ten columns">2</div>
-          </div>
-          <hr />
-          <div class="row">
-            <div class="two columns mobile-one"><img src="http://placehold.it/80x80&text=[img]" /></div>
-            <div class="ten columns">3</div>
-          </div>
+          <div id="search-results"></div>
         </li>
       </ul>
     </div>
@@ -217,13 +216,33 @@
           </ul>
         </div>
       </div>
-    </div> 
+    </div>
   </footer>
+  <script id="note-template" type="text/x-handlebars-template">
+  {{#each notes}}
+    <hr/>
+    <div class="row">
+      <div class="three columns mobile-one">
+      {{#if snapshot_url}}
+        <img src="{{snapshot_url}}"/>
+      {{else}}
+        {{#if homepage}}
+          <img src="images/github_logo.png"/>
+        {{/if}}
+      {{/if}}
+      </div>
+      <div class="nine columns">
+        {{{note}}}
+      </div>
+    </div>
+  {{/each}}
+  </script>
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/foundation.min.js"></script>
   <script src="javascripts/jquery.loadmask.min.js"></script>
   <script src="javascripts/jquery.textext.js"></script>
   <script src="javascripts/app.js"></script>
+  <script src="javascripts/handlebars.js"></script>
   <script src="javascripts/main.js"></script>
 </body>
 </html>

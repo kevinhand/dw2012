@@ -4,7 +4,7 @@ $(document).foundationTabs();
 
 $('.tags').textext({ plugins: 'tags' });
 
-var api_base = 'http://dw2012.xiao-jia.com/dw2012';
+var api_base = 'http://localhost/dw2012';
 
 function get_cookie(c_name){
   var i, x, y, ARRcookies = document.cookie.split(";");
@@ -31,6 +31,9 @@ var save_link_handler = {
     $('#addLinkTab .hidden.row').hide();
     $('#addLinkTab .type-link.row').show();
     $('#addLinkTab .type-link form input[name="title"]').val(data.title);
+    $('#addLinkTab .type-link form input[name="snapshot_url"]').val(data.snapshot_url);
+    $('#addLinkTab .type-link form textarea[name="note"]').val('');
+    $('#addLinkTab .type-link form textarea[name="tags"]').val('');
     $('#addLinkTab .type-link .th img').attr('src', data.snapshot_url);
   },
   project: function(data){
@@ -38,6 +41,8 @@ var save_link_handler = {
     $('#addLinkTab .type-project.row').show();
     $('#addLinkTab .type-project form textarea[name="description"]').text(data.description);
     $('#addLinkTab .type-project form input[name="homepage"]').val(data.homepage);
+    $('#addLinkTab .type-project form textarea[name="note"]').val('');
+    $('#addLinkTab .type-project form textarea[name="tags"]').val('');
   },
   question: function(data){
     $('#addLinkTab .hidden.row').hide();
@@ -46,6 +51,7 @@ var save_link_handler = {
     $('#addLinkTab .type-question form input[name="summary"]').text(data.summary);
     // TODO append replies
     $('#addLinkTab .type-question form .tags').textext()[0].tags().addTags(data.tags || []);
+    $('#addLinkTab .type-project form textarea[name="note"]').val('');
   },
   paper: function(data){
     $('#addLinkTab .hidden.row').hide();
@@ -55,6 +61,8 @@ var save_link_handler = {
     $('#addLinkTab .type-paper form input[name="year"]').val(data.year);
     $('#addLinkTab .type-paper form input[name="conference"]').val(data.conference);
     $('#addLinkTab .type-paper form input[name="description"]').text(data.description);
+    $('#addLinkTab .type-project form textarea[name="note"]').val('');
+    $('#addLinkTab .type-project form textarea[name="tags"]').val('');
   }
 };
 
@@ -176,6 +184,21 @@ $('#addPaperTab .hidden.row form').submit(function(){
     spin_unlock('#addPaperTab');
   }, 'json');
   return false;
+});
+
+var note_template = Handlebars.compile($('#note-template').html());
+
+$('#btn-search-notes').click(function(){
+  var tags = $('#search-tags').val();
+  spin_lock('#searchTab');
+  $.get(api_base + '/notes', { q: tags, me: get_cookie('user_id') }, function(data){
+    if (data.status == 'success') {
+      $('#search-results').html(note_template(data));
+    } else {
+      report_error(data);
+    }
+    spin_unlock('#searchTab');
+  }, 'json');
 });
 
 });

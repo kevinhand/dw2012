@@ -20,8 +20,12 @@ class NoteController extends ApplicationController
   
   public function parseUrl($url)
   {
-    $parser = new UrlParser();
-    $this->success($parser->parse($url));
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+      $parser = new UrlParser();
+      $this->success($parser->parse($url));
+    } else {
+      $this->failure('invalid url');
+    }
   }
   
   public function createNote($note)
@@ -29,14 +33,25 @@ class NoteController extends ApplicationController
     global $mongodb;
     $collection = $mongodb->notes;
     $note['user_email'] = $this->user['email'];
+    Indexer::buildKeywords($note);
     $collection->insert($note);
     $this->success(array('id' => $note['_id']->{'$id'}));
   }
   
   public function searchNote($q, $me)
   {
-    // TODO
-    $this->success(array('notes' => array()));
+    global $mongodb;
+    $collection = $mongodb->notes;
+    $collection->ensureIndex('keywords');
+    $keywords = array_unique(array_map('strtolower', array_filter(array_map('trim', explode(' ', $q)), 'strlen')));
+    $cursor = $collection->find(array('keywords' => array('$all' => $keywords)));
+    $notes = array();
+    foreach (iterator_to_array($cursor) as $id => $note) {
+      $note['id'] = $id;
+      $note['note'] = Markdown($note['note']);
+      $notes[] = $note;
+    }
+    $this->success(array('notes' => $notes));
   }
   
   public function updateNote($id, $note)
@@ -44,6 +59,7 @@ class NoteController extends ApplicationController
     global $mongodb;
     $collection = $mongodb->notes;
     $note['user_email'] = $this->user['email'];
+    Indexer::buildKeywords($note);
     $collection->update(array('_id' => new MongoId($id)), $note);
     $this->success();
   }
