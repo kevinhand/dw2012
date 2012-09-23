@@ -1,0 +1,14 @@
+{
+  "update_url":"http://clients2.google.com/service/update2/crx",
+  "name": "TEP",
+  "version": "0.1",
+  "description": "TEP Chrome Extension",
+  "background_page": "background.html",
+  "permissions": [
+    "contextMenus", "tabs"
+  ],
+  "icons": {
+    "16": "icon.png"
+  },
+  "minimum_chrome_version": "6"
+}
