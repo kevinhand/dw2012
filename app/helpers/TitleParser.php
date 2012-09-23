@@ -7,6 +7,7 @@ class TitleParser
     $cache_key = sha1($title);
     $cache_value = $cache->get($cache_key);
     if ($cache_value === NULL) {
+      $cache_value = array('type' => 'paper', 'title' => $title);
       $html = file_get_contents('http://academic.research.microsoft.com/Search?query=' . urlencode($title));
       if (preg_match('@href="Publication/(?P<id>\d+)@', $html, $matches)) {
         $bibtex = file_get_contents("http://academic.research.microsoft.com/{$matches['id']}.bib?type=2&format=0&download=1");
@@ -47,10 +48,9 @@ class TitleParser
           'conference' => $this->conference,
           'description' => $this->description
         );
-        $cache->set($cache_key, $cache_value);
       }
-      return $cache_value;
+      $cache->set($cache_key, $cache_value);
     }
-    return array();
+    return $cache_value;
   }
 }
