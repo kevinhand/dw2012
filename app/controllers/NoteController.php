@@ -71,6 +71,23 @@ class NoteController extends ApplicationController
     $this->success(array('notes' => $notes));
   }
   
+  public function listMyTags($me)
+  {
+    global $mongodb;
+    $collection = $mongodb->users;
+    $user = $collection->findOne(array('_id' => new MongoId($me)));
+    $collection = $mongodb->notes;
+    $cursor = $collection->find(array('user_email' => $user['email']));
+    $tags = array();
+    foreach (iterator_to_array($cursor) as $id => $note) {
+      if (array_key_exists('tags', $note) and is_array($note['tags'])) {
+        $tags = array_merge($tags, $note['tags']);
+      }
+    }
+    $tags = array_unique(array_map('strtolower', $tags));
+    $this->success(array('tags' => $tags));
+  }
+  
   public function updateNote($id, $note)
   {
     global $mongodb;

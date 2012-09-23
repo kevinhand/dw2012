@@ -10,7 +10,7 @@ class LinkParser
   {
     $uuid = sha1($url);
     $snapshot_path = SNAPSHOTS_DIR . "/{$uuid}.png";
-    $this->title = exec(PHANTOMJS_BIN . ' ' . RASTERIZE_JS . ' ' . $url . ' ' . $snapshot_path);
+    $this->title = exec(PHANTOMJS_BIN . ' ' . RASTERIZE_JS . ' \'' . $url . '\' ' . $snapshot_path);
     $this->snapshot_url = SNAPSHOTS_URL . "/{$uuid}.png";
     return array(
       'type' => 'link',

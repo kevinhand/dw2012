@@ -37,6 +37,12 @@ $app->get('/notes', function () {
   $controller->searchNote(fRequest::get('q'), fRequest::get('me'));
 });
 
+// Tags
+$app->get('/tags', function () {
+  $controller = new NoteController();
+  $controller->listMyTags(fRequest::get('me'));
+});
+
 // Edit and update note
 $app->post('/note/:id/_update', function ($id) {
   $controller = new NoteController();

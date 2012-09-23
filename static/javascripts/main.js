@@ -78,6 +78,9 @@ var save_paper_handler = {
   }
 };
 
+var note_template = Handlebars.compile($('#note-template').html());
+var tag_template = Handlebars.compile($('#tag-template').html());
+
 function spin_lock(selector){
   $(selector).mask('Loading...');
 }
@@ -121,6 +124,7 @@ $('#btn-save-link').click(function(){
 $('#addLinkTab .hidden.row form').submit(function(){
   var data = $(this).serializeObject();
   data.url = $('#link-url').val();
+  if (data.tags) data.tags = eval(data.tags);
   spin_lock('#addLinkTab');
   $.post(api_base + '/notes', {
     user_id: get_cookie('user_id'),
@@ -164,6 +168,7 @@ $('#btn-save-paper').click(function(){
 
 $('#addPaperTab .hidden.row form').submit(function(){
   var data = $(this).serializeObject();
+  if (data.tags) data.tags = eval(data.tags);
   spin_lock('#addPaperTab');
   $.post(api_base + '/notes', {
     user_id: get_cookie('user_id'),
@@ -186,10 +191,8 @@ $('#addPaperTab .hidden.row form').submit(function(){
   return false;
 });
 
-var note_template = Handlebars.compile($('#note-template').html());
-
-$('#btn-search-notes').click(function(){
-  var tags = $('#search-tags').val();
+window.search_with = function(tags){
+  window.location.hash = '#search';
   spin_lock('#searchTab');
   $.get(api_base + '/notes', { q: tags, me: get_cookie('user_id') }, function(data){
     if (data.status == 'success') {
@@ -199,11 +202,25 @@ $('#btn-search-notes').click(function(){
     }
     spin_unlock('#searchTab');
   }, 'json');
+  return false;
+};
+
+$('#btn-search-notes').click(function(){
+  var tags = $('#search-tags').val();
+  window.search_with(tags);
 });
 
 $.get(api_base + '/notes/random', function(data){
   if (data.status == 'success') {
     $('#random-notes').html(note_template(data));
+  } else {
+    report_error(data);
+  }
+}, 'json');
+
+$.get(api_base + '/tags', { me: get_cookie('user_id') }, function(data){
+  if (data.status == 'success') {
+    $('#tags-for-search').html(tag_template(data));
   } else {
     report_error(data);
   }
