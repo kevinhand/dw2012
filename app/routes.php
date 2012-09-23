@@ -25,6 +25,12 @@ $app->post('/notes', function () {
   $controller->createNote(fRequest::get('data'));
 });
 
+// Random notes
+$app->get('/notes/random', function () {
+  $controller = new NoteController();
+  $controller->randomNotes();
+});
+
 // Search notes
 $app->get('/notes', function () {
   $controller = new NoteController();

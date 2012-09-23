@@ -201,4 +201,12 @@ $('#btn-search-notes').click(function(){
   }, 'json');
 });
 
+$.get(api_base + '/notes/random', function(data){
+  if (data.status == 'success') {
+    $('#random-notes').html(note_template(data));
+  } else {
+    report_error(data);
+  }
+}, 'json');
+
 });

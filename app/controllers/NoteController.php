@@ -33,9 +33,26 @@ class NoteController extends ApplicationController
     global $mongodb;
     $collection = $mongodb->notes;
     $note['user_email'] = $this->user['email'];
+    $note['created_at'] = Util::currentTime();
     Indexer::buildKeywords($note);
     $collection->insert($note);
     $this->success(array('id' => $note['_id']->{'$id'}));
+  }
+  
+  public function randomNotes()
+  {
+    global $mongodb;
+    $collection = $mongodb->notes;
+    $cursor = $collection->find();
+    $notes = array();
+    foreach (iterator_to_array($cursor) as $id => $note) {
+      $note['id'] = $id;
+      if (array_key_exists('note', $note)) {
+        $note['note'] = Markdown($note['note']);
+      }
+      $notes[] = $note;
+    }
+    $this->success(array('notes' => $notes));
   }
   
   public function searchNote($q, $me)
