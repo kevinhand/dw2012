@@ -84,7 +84,7 @@ class NoteController extends ApplicationController
         $tags = array_merge($tags, $note['tags']);
       }
     }
-    $tags = array_unique(array_map('strtolower', $tags));
+    $tags = array_values(array_unique(array_map('strtolower', $tags)));
     $this->success(array('tags' => $tags));
   }
   

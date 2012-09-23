@@ -143,6 +143,7 @@ $('#addLinkTab .hidden.row form').submit(function(){
       report_error(data);
     }
     spin_unlock('#addLinkTab');
+    window.refresh_tags();
   }, 'json');
   return false;
 });
@@ -187,12 +188,15 @@ $('#addPaperTab .hidden.row form').submit(function(){
       report_error(data);
     }
     spin_unlock('#addPaperTab');
+    window.refresh_tags();
   }, 'json');
   return false;
 });
 
 window.search_with = function(tags){
+  window.location.hash = '#search';
   $('#search-notes-link').click();
+  $('#search-tags').val(tags);
   spin_lock('#searchTab');
   $.get(api_base + '/notes', { q: tags, me: get_cookie('user_id') }, function(data){
     if (data.status == 'success') {
@@ -218,12 +222,15 @@ $.get(api_base + '/notes/random', function(data){
   }
 }, 'json');
 
-$.get(api_base + '/tags', { me: get_cookie('user_id') }, function(data){
-  if (data.status == 'success') {
-    $('#tags-for-search').html(tag_template(data));
-  } else {
-    report_error(data);
-  }
-}, 'json');
+window.refresh_tags = function(){
+  $.get(api_base + '/tags', { me: get_cookie('user_id') }, function(data){
+    if (data.status == 'success') {
+      $('#tags-for-search').html(tag_template(data));
+    } else {
+      report_error(data);
+    }
+  }, 'json');
+};
+window.refresh_tags();
 
 });

@@ -35,9 +35,10 @@
       <dl class="vertical tabs">
         <dd class="active"><a href="#randomNotes">Random Notes</a></dd>
         <dd><a href="#addLink">Add Link</a></dd>
-        <dd><a href="#addPaper">Add Paper</a></dd>
-        <dd><a href="#addText">Add Text / Code</a></dd>
+        <dd><a href="#addPaper">Add Paper By Title</a></dd>
+        <!--<dd><a href="#addText">Add Code Snippet</a></dd>-->
         <dd><a id="search-notes-link" href="#search">Search Notes</a></dd>
+        <dd><a href="#usefulLinks">Useful Links ;-D</a></dd>
       </dl>
       <div id="tags-for-search"></div>
     </div>
@@ -76,6 +77,7 @@
             <form class="seven columns">
               <label>Type: <span class="radius label">Normal Link</span></label>
               <input type="hidden" name="type" value="link"/>
+              <input type="hidden" name="islink" value="true"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <input type="hidden" name="snapshot_url" value=""/>
@@ -96,6 +98,7 @@
             <form class="eight columns">
               <label>Type: <span class="radius label">GitHub Project</span></label>
               <input type="hidden" name="type" value="project"/>
+              <input type="hidden" name="isproject" value="true"/>
               <label>Description:</label>
               <textarea name="description"></textarea>
               <label>Homepage:</label>
@@ -112,12 +115,15 @@
             <form class="twelve columns">
               <label>Type: <span class="radius label">StackOverflow Question</span></label>
               <input type="hidden" name="type" value="question"/>
+              <input type="hidden" name="isquestion" value="true"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Summary:</label>
               <textarea name="summary"></textarea>
+              <!--
               <label>Replies: (choose the ones you like)</label>
               <ul class="replies">TODO</ul>
+              -->
               <label>Note:</label>
               <textarea name="note" placeholder="write your note here in markdown" rows="5"></textarea>
               <label>Tags:</label>
@@ -130,6 +136,7 @@
             <form class="twelve columns">
               <label>Type: <span class="radius label">Academic Paper</span></label>
               <input type="hidden" name="type" value="paper"/>
+              <input type="hidden" name="ispaper" value="true"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Author(s):</label>
@@ -165,6 +172,7 @@
             <form class="twelve columns">
               <label>Type: <span class="radius label">Academic Paper</span></label>
               <input type="hidden" name="type" value="paper"/>
+              <input type="hidden" name="ispaper" value="true"/>
               <label>Title:</label>
               <input name="title" type="text"/>
               <label>Author(s):</label>
@@ -201,6 +209,17 @@
           </div>
           <div id="search-results"></div>
         </li>
+        <li id="usefulLinksTab">
+          <pre>
+http://xiao-jia.com
+http://www.google.com
+http://www.comp.nus.edu.sg
+https://github.com/twitter/bootstrap
+http://stackoverflow.com/questions/8801329/unknown-type-name-in-objective-c
+http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.64.9246
+Next 700 Programming Languages
+          </pre>
+        </li>
       </ul>
     </div>
   </div>
@@ -234,13 +253,42 @@
       {{#if snapshot_url}}
         <a target="_blank" href="{{url}}"><img src="{{snapshot_url}}"/></a>
       {{else}}
-        {{#if homepage}}
+        {{#if isproject}}
           <a target="_blank" href="{{homepage}}"><img src="images/github_logo.png"/></a>
+        {{else}}
+          {{#if isquestion}}
+            <a target="_blank" href="{{url}}"><img src="images/stackoverflow.png"/></a>
+          {{else}}
+            <a target="_blank" href="{{url}}"><img src="images/paper.jpeg"/></a>
+          {{/if}}
         {{/if}}
+      {{/if}}
+      {{#if created_at}}
+        <span class="radius success label">{{created_at}}</span>
       {{/if}}
       </div>
       <div class="nine columns">
-        <a target="_blank" href="{{url}}">{{{note}}}</a>
+        {{#if isproject}}
+          <p>{{description}}</p>
+          Homepage: <a target="_blank" href="{{homepage}}">{{homepage}}</a>
+        {{else}}
+          {{#if isquestion}}
+            <a target="_blank" href="{{url}}">{{title}}</a>
+            {{#if summary}}
+              {{summary}}
+            {{/if}}
+          {{else}}
+            {{#if ispaper}}
+              <a target="_blank" href="{{url}}">{{title}}</a> ({{year}}) by {{authors}},
+              published at {{conference}}
+              <p>{{#if description}}{{description}}{{/if}}</p>
+            {{else}}
+              <a target="_blank" href="{{url}}">{{title}}</a>
+            {{/if}}
+          {{/if}}
+        {{/if}}  
+        <hr/>
+        {{{note}}}
         {{#if tags}}
           {{#each tags}}
             <a href="javascript:window.search_with('{{this}}');" class="radius label">{{this}}</a>
@@ -252,7 +300,7 @@
   </script>
   <script id="tag-template" type="text/x-handlebars-template">
   {{#each tags}}
-    <a href="javascript:window.search_with('{{this}}');" class="radius label">{{this}}</a>
+    <a href="javascript:window.search_with('{{this}}');" class="radius label" style="line-height: 22px;">{{this}}</a>
   {{/each}}
   </script>
   <script src="javascripts/jquery.js"></script>
