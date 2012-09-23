@@ -65,4 +65,4 @@ if ($user === NULL) {
   $collection->update($user, array('$token' => $token));
   $user_id = $user['_id'];
 }
-Util::redirect("/#${user_id}/${token}");
+fURL::redirect("http://localhost/dw2012/static/home.html?user_id=${user_id}&token=${token}");

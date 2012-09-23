@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width"/>
+<title>Home &middot; TEP</title>
+
+<!-- Included CSS Files (Compressed) -->
+<link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+
+<!-- Included JS Files (Compressed) -->
+<script src="javascripts/foundation.min.js"></script>
+
+<!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <!-- Header and Nav -->
+
+    <div class="row">
+      <div class="three columns">
+        <h1><img src="images/logo.gif" /></h1>
+      </div>
+      <div class="nine columns">
+        <ul class="nav-bar right">
+	    <li><a href="#" id="TopButtonLogin">Sign In via Google</a></li>
+	    <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- End Header and Nav -->
+    <div class="row">
+	<div class="twelve columns">
+	    <hr>
+	    </div>
+	</div>
+
+    <!-- First Band (Slider) -->
+    <!-- The Orbit slider is initialized at the bottom of the page by calling .orbit() on #slider -->
+    
+    <div class="row">
+      <div class="twelve columns">
+        <div id="slider">
+          <img src="images/s1.jpg" />
+          <img src="images/s2.jpg" />
+          <img src="images/s3.jpg" />
+        </div>
+
+        <hr />
+      </div>
+    </div>
+
+
+    <!-- Three-up Content Blocks -->
+
+    <div class="row">
+
+      <div class="four columns">
+          <!-- TopButton1 is used for create-->
+	  <!--button class="radius superlarge button" id="TopButton1">Create Notes</button-->
+	  <a href = "#">
+	      <img src="images/1.jpg" id="TopButton1"></img>
+	      </a>
+      </div>
+
+      <div class="four columns">
+	  <!--button class="radius superlarge button" id="TopButton2">Search Notes</button-->
+	  <a href = "#">
+	      <img src="images/2.jpg" id="TopButton2"></img>
+	      </a>
+      </div>
+
+      <div class="four columns">
+        <!--button class="radius superlarge button" id="TopButton3">View Notes</button-->
+	<a href = "#">
+	      <img src="images/3.jpg" id="TopButton3"></img>
+	      </a>
+      </div>
+
+    </div>
+
+
+
+
+    <!-- Footer -->
+
+    <footer class="row">
+      <div class="twelve columns">
+        <hr />
+        <div class="row">
+          <div class="six columns">
+            <p>&copy; Copyright no one at all.</p>
+          </div>
+        </div>
+      </div> 
+    </footer>  
+    <div id="myModal" class="reveal-modal large">
+
+      <div class="row">
+
+        <div class="four columns">
+          <a href="#"><img src="images/c1.jpg" id="ButtonForLink">
+          </a>
+        </div>
+
+        <div class="four columns">
+          <a href="#"><img src="images/c2.jpg" id="ButtonForPaper">
+          </a>
+        </div>
+
+        <div class="four columns">
+          <a href="#"><img src="images/c3.jpg" id="ButtonForCode">
+          </a>
+        </div>
+
+      </div>
+
+
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+<script src="javascripts/cookies.js"></script>
+<script type="text/javascript">
+$(window).load(function() {
+  $('#slider').orbit();
+});
+//-----
+$(function() {
+  (function(){
+    var prmstr = window.location.search.substr(1);
+    var prmarr = prmstr.split("&");
+    var params = {};
+
+    for (var i = 0; i < prmarr.length; i++) {
+      var tmparr = prmarr[i].split("=");
+      params[tmparr[0]] = tmparr[1];
+    }
+
+    if (params.user_id && params.token) {
+      window.set_cookie('user_id', params.user_id);
+      window.set_cookie('token', params.token);
+      // after login
+      window.location = "http://localhost/dw2012/static/" + window.get_cookie('papapa');
+    }
+  })();
+
+  function OAuth(kind){
+    window.set_cookie('papapa', kind, 777);
+    window.location = "http://localhost/dw2012/auth/google";
+  }
+  
+  $('#TopButton1').click(function() {
+    $('#myModal').reveal();
+  });
+  $('#TopButton2').click(function() {
+    OAuth("#search");
+  });
+  $('#TopButtonLogin').click(function() {
+    OAuth("");
+  });
+  $('#TopButton3').click(function() {
+    OAuth("#randomNotes");
+  });
+  $('#ButtonForLink').click(function() {
+    OAuth("#addLink");
+  });
+  $('#ButtonForPaper').click(function() {
+    OAuth("#addPaper");
+  });
+  $('#ButtonForCode').click(function() {
+    OAuth("#addText");
+  });
+});
+</script>  
+
+  </body>
+  </html>

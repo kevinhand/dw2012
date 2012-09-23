@@ -6,26 +6,6 @@ $('.tags').textext({ plugins: 'tags' });
 
 var api_base = 'http://localhost/dw2012';
 
-function get_cookie(c_name){
-  var i, x, y, ARRcookies = document.cookie.split(";");
-  for (i = 0; i < ARRcookies.length; i++) {
-    x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-    y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-    x = x.replace(/^\s+|\s+$/g, "");
-    if (x == c_name) {
-      return unescape(y);
-    }
-  }
-  return null;
-}
-
-function set_cookie(c_name, value, exdays){
-  var c_value, exdate = new Date();
-  exdate.setDate(exdate.getDate() + exdays);
-  c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
-  document.cookie = c_name + "=" + c_value;
-}
-
 (function(){
   var prmstr = window.location.search.substr(1);
   var prmarr = prmstr.split("&");
@@ -113,9 +93,6 @@ function report_error(data){
     console.log(data);
     window.alert('unknown error');
   }
-  // FIXME debug:
-  set_cookie('user_id', '505dbaa454b1b75093000000', 777);
-  set_cookie('token', 'e33199b237f993775ddde3fe51d43844', 777);
 }
 
 $('#btn-save-link').click(function(){
@@ -143,8 +120,8 @@ $('#addLinkTab .hidden.row form').submit(function(){
   if (data.tags) data.tags = eval(data.tags);
   spin_lock('#addLinkTab');
   $.post(api_base + '/notes', {
-    user_id: get_cookie('user_id'),
-    token: get_cookie('token'),
+    user_id: window.get_cookie('user_id'),
+    token: window.get_cookie('token'),
     data: data
   }, function(data){
     if (data.status == 'success') {
@@ -188,8 +165,8 @@ $('#addPaperTab .hidden.row form').submit(function(){
   if (data.tags) data.tags = eval(data.tags);
   spin_lock('#addPaperTab');
   $.post(api_base + '/notes', {
-    user_id: get_cookie('user_id'),
-    token: get_cookie('token'),
+    user_id: window.get_cookie('user_id'),
+    token: window.get_cookie('token'),
     data: data
   }, function(data){
     if (data.status == 'success') {
@@ -214,7 +191,7 @@ window.search_with = function(tags){
   $('#search-notes-link').click();
   $('#search-tags').val(tags);
   spin_lock('#searchTab');
-  $.get(api_base + '/notes', { q: tags, me: get_cookie('user_id') }, function(data){
+  $.get(api_base + '/notes', { q: tags, me: window.get_cookie('user_id') }, function(data){
     if (data.status == 'success') {
       $('#search-results').html(note_template(data));
     } else {
@@ -239,7 +216,7 @@ $.get(api_base + '/notes/random', function(data){
 }, 'json');
 
 window.refresh_tags = function(){
-  $.get(api_base + '/tags', { me: get_cookie('user_id') }, function(data){
+  $.get(api_base + '/tags', { me: window.get_cookie('user_id') }, function(data){
     if (data.status == 'success') {
       $('#tags-for-search').html(tag_template(data));
     } else {
