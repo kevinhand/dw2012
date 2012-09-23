@@ -11,7 +11,7 @@ class MSRAcademicParser
     $id = $this->matches['id'];
     $bibtex = file_get_contents("http://academic.research.microsoft.com/{$id}.bib?type=2&format=0&download=1");
     $this->title = '';
-    if (preg_match('@title\s*=\s*{(?P<title>[^}]+)}@', $bibtex, $matches)) {
+    if (preg_match('@title\s*=\s*{+(?P<title>[^}]+)}@', $bibtex, $matches)) {
       $this->title = $matches['title'];
     }
     $this->authors = '';

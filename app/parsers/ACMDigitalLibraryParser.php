@@ -12,7 +12,7 @@ class ACMDigitalLibraryParser
     $id = $this->matches['id'];
     $bibtex = file_get_contents("http://dl.acm.org/downformats.cfm?id={$id}&parent_id={$parent}&expformat=bibtex");
     $this->title = '';
-    if (preg_match('@title\s*=\s*{(?P<title>[^}]+)}@', $bibtex, $matches)) {
+    if (preg_match('@title\s*=\s*{+(?P<title>[^}]+)}@', $bibtex, $matches)) {
       $this->title = $matches['title'];
     }
     $this->authors = '';

@@ -12,7 +12,7 @@ class TitleParser
       if (preg_match('@href="Publication/(?P<id>\d+)@', $html, $matches)) {
         $bibtex = file_get_contents("http://academic.research.microsoft.com/{$matches['id']}.bib?type=2&format=0&download=1");
         $this->title = '';
-        if (preg_match('@title\s*=\s*{(?P<title>[^}]+)}@', $bibtex, $matches)) {
+        if (preg_match('@title\s*=\s*{+(?P<title>[^}]+)}@', $bibtex, $matches)) {
           $this->title = $matches['title'];
         }
         $this->authors = '';
