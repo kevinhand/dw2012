@@ -20,6 +20,10 @@ var api_base = 'http://localhost/dw2012';
     $('#link-url').val(decodeURIComponent(params.url));
     $('#add-link-link').click();
   }
+  
+  if (params.text) {
+    $('#addTextTab textarea[name="content"]').text(decodeURIComponent(params.text));
+  }
 })();
 
 var save_link_handler = {

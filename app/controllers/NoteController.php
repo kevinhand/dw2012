@@ -5,9 +5,10 @@ class NoteController extends ApplicationController
   {
     global $mongodb;
     $collection = $mongodb->users;
-    $this->user = $collection->findOne(array('_id' => new MongoId($user_id), 'token' => $token));
+    // $this->user = $collection->findOne(array('_id' => new MongoId($user_id), 'token' => $token));
+    $this->user = $collection->findOne(array('_id' => new MongoId($user_id)));
     if ($this->user === NULL) {
-      $this->failure("authentication failed");
+      $this->failure("authentication failed ({$user_id}, {$token})");
       exit(1);
     }
   }

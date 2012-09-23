@@ -191,7 +191,19 @@
           </div>
         </li>
         <li id="addTextTab">
-          Add Text / Code
+          <form>
+            <h4>Code Snippet / Plain Text</h4>
+            <textarea name="content" rows="20"></textarea>
+            <select name="language" class="left two columns">
+              <option class="plain">Plain Text</option>
+              <option class="c">C</option>
+              <option class="cpp">C++</option>
+              <option class="java">Java</option>
+              <option class="python">Python</option>
+            </select>
+            <a href="javascript:window.location.reload();" class="secondary button right">Cancel</a>
+            <button class="button right">Submit</button>
+          </form>
         </li>
         <li id="searchTab">
           <div class="row collapse">
