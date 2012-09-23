@@ -192,7 +192,7 @@ $('#addPaperTab .hidden.row form').submit(function(){
 });
 
 window.search_with = function(tags){
-  window.location.hash = '#search';
+  $('#search-notes-link').click();
   spin_lock('#searchTab');
   $.get(api_base + '/notes', { q: tags, me: get_cookie('user_id') }, function(data){
     if (data.status == 'success') {

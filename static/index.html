@@ -37,7 +37,7 @@
         <dd><a href="#addLink">Add Link</a></dd>
         <dd><a href="#addPaper">Add Paper</a></dd>
         <dd><a href="#addText">Add Text / Code</a></dd>
-        <dd><a href="#search">Search Notes</a></dd>
+        <dd><a id="search-notes-link" href="#search">Search Notes</a></dd>
       </dl>
       <div id="tags-for-search"></div>
     </div>
@@ -236,16 +236,19 @@
       </div>
       <div class="nine columns">
         <a target="_blank" href="{{url}}">{{{note}}}</a>
+        {{#if tags}}
+          {{#each tags}}
+            <a href="javascript:window.search_with('{{this}}');" class="radius label">{{this}}</a>
+          {{/each}}
+        {{/if}}
       </div>
     </div>
   {{/each}}
   </script>
   <script id="tag-template" type="text/x-handlebars-template">
-  <ul>
   {{#each tags}}
-    <li><a href="javascript:window.search_with('{{this}}');">{{this}}</a></li>
+    <a href="javascript:window.search_with('{{this}}');" class="radius label">{{this}}</a>
   {{/each}}
-  </ul>
   </script>
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/foundation.min.js"></script>
